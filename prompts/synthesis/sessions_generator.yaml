@@ -1,0 +1,170 @@
+system_prompt: |-
+  ### **Your Objective**
+
+  You will be provided with a **user persona**. This user will interact with a conversational AI assistant, like ChatGPT, in diverse scenarios. In each scenario, the user will ask the AI assistant to help them with a specific task in their worklife. You will also be provided with a list of **context factors** that are present in these scenarios with the AI assistant. For each factor, you will also be given a **criterion** that defines how the user expects the AI assistant to behave when that factor is involved.
+
+  Your goal is to imagine a user journey for this persona, focusing on a series of connected scenarios or contexts in the user's work life. You should explore the various tasks or issues that user would face in in their daily life and where they may need the help of the AI assistant. For each scenario in this story, you should consider the concrete request that the user would make to the AI assistant to get help with their tasks or issues.
+
+  You should return your final output in valid YAML format.
+
+  ### **Definitions of a Scenario**
+
+  Each scenario should be defined by the components listed below. You should satisfy all of the requirements described for each component.
+
+  1. **Context Factor**: 
+    - A factor present in the user's world and environment that influences the scenario but it is not the main focus of the scenario.
+    - The factor should NOT be the cause for the scenario, but should still influence the user by shaping their expectations in the scenario.
+
+  2. **Preference**: 
+    - Uniquely personal preference that the user holds and considers when the specific context factor is involved in the situation.
+    - This preference describes the user's intentions, expectations, or desires regarding how the AI assistant should help in this scenario.
+
+  3. **Task Type**:
+    - For each context factor, you will be provided with a list of task types where that context factor can influence the user's expectation.
+    - When deciding on the task for each sceanrio, you should choose one of the task types that are related to that context factor.
+
+  4. **Story**: 
+    - A narrative of the user's work life that sets the scene for the scenario. This should describe how the user reached the current scenario and why they need help. 
+    - The narrative should detail the user's thoughts, feelings, and motivations. 
+    - The story should also describe how the context factor is involved, but not as the main cause or central focus.
+
+  5. **Request**: 
+    - The request that the user will give to the AI assistant that is related to the chosen task type.
+    - **Self-Contained and Complete Request**: The request should include all the details that are needed for the AI assistant to immediately act on the user's request (e.g., information about the context factor, provide key elements or requirements). 
+      - Remember that an AI assistant only knows about the information that is included in the user's request. The AI cannot access any of the previous requests or the user's external environment. The request should include all necessary information.
+      - These are examples of incorrect requests with errors:
+        - Example 1:
+          - Request: "Help me outline a technical report that summarizes my findings."
+          - Reason for error: The request fails to mention or describe what the findings were.
+        - Example 2:
+          - Request: "Create an instruction manual for my photography process."
+          - Reason for error: The request does not explain what the user's photography process is.
+    - **Resource**: If the user wants the AI assistant to act on or with a resource (e.g., a document, code, data, etc.), the request should include the placeholder "[resource]" to specify where the user would copy-paste the contents of the resource.
+      - Then, the actual full contents of the resource should be included in the "resource" field of the scenario.
+      - The resource contents should not be placeholders, but instead reveal actual content (e.g., document, code, data, etc.) tha the user will provide to the AI assistant for the request.
+      - The resource should avoid revealing any information about the user's preference.
+    - **Two Versions of the Request**: You will be asked to produce two versions of the request:
+      - **Request with Factor and Preference**: This version of the request should explicitly (a) identify the context factor and (b) explicitly describe the user's personal preference.
+      - **Request with Factor**: This version of the request should include all the same details and (a) explicitly identify the context factor, but (b) it should avoid including any information about the user's preference. Only the details related to the user's preference should be removed.
+
+  ### **Output Requirements:**
+
+  1. **{n_sessions} Unique Scenarios**:
+    - Create {n_sessions} distinct scenarios that involve tasks or problems in the user's work life.
+    - The scenarios should progress chronologically in the user's journey.
+    - Each scenario should have a number ID that indicates the order in which the scenarios occur in the user's journey.
+    - You should return the complete journey that includes all the scenarios in a single response. Avoid asking whether to continue or not.
+
+  2. **Requirements for the User Journey**:
+    - You should create a coherent and engaging user journey, where each scenario should incorporate a distinct context factor and preference.
+    - Certain scenarios, however, can also revisit specific context factors or demonstrate how the user's preferences around these factors have evolved over time. Specifically, your user journey should follow the required structure below:
+  {series_structure}
+    - Ensure that context factors A and B are assigned to the following two options:
+      - "{first_factor}"
+      - "{second_factor}"
+    - You may choose which option corresponds to A and which corresponds to B, as long as both options are used. However, ensure that these factors are only used in the scenarios specified in the journey structure.
+    - As seen from the structure, three scenarios should share the context factor A but, in the middle scenario, the associated preference A should change significantly into the preference A'. The story in the middle scenario should explain why the preference about this factor shifted. The final scenario should then keep the same preference A' as it was changed in the middle scenario.
+    - The new preference A' should be incompatible, mutually exclusive, or contradictory with the original preference A. However, the new preference A' should be described in a similar way to the original preference A, avoiding direct negation or explicitly mentioning that a change has occurred.
+    - Below are examples on how preferences can shift:
+      - Example 1
+        - Context factor A: "Engineering Intern Rasmus"
+        - Preference A: "Responsibilities should be communicated with a stern and direct tone."
+        - Story: "[...] After a few weeks of working with Rasmus, the team has noticed that he has become more confident and proactive in his work, even taking initiative to find where he can help out with the project. The team has decided to be more encouraging and less authorative in their communication with him to foster his growth and confidence. [...]"
+        - Changed preference A': "Responsibilities should be described in an open-ended and encouraging manner."
+      - Example 2
+        - Context factor A: "Music Production Client Meetings"
+        - Preference A: "Meetings should solely focus on describing and promoting the company's approach to music production."
+        - Story: "[...] In previous meetings, Laufey has noticed that the client meetings frequently get bogged down by questions about the company's pricing, timelines, legal agreements, and other logistical details. Laufey has decided that she try to address some of these questions during these meetings to ensure that the clients feel more confident and informed about the company's services. [...]"
+        - Changed preference A': "Meetings should solely focus on discussing logistical and financial concerns." 
+
+  ### **Examples of Scenarios**
+
+  ```yaml
+  scenarios:
+    - id: 1
+      context_factor: "End-of-the-Year Report"
+      preference: "Concrete statistics on projected growth should be included in the report and explained qualitatively."
+      task_type: "Writing & editing"
+      story: ...
+      request_with_factor_and_preference: |
+        Revise the outline below for an end-of-the-year report for my team that works on interior design projects for small businesses. Remember that this report should include a section with concrete statistics for our projected growth in profits for the next year. The statistics should be explained qualitatively.
+        
+        [resource]
+      request_with_factor: |
+        Revise the outline below for an end-of-the-year report for my team that works on interior design projects for small businesses.
+        
+        [resource]
+      resource: |
+        **1. Executive Summary**
+        - Brief overview of the year's highlights.
+        - Summary of achievements, challenges, and key takeaways.
+        **2. Project Portfolio Overview**
+        - List and categorize completed projects by type (e.g., retail, office, residential small business).
+        - Include standout projects with before-and-after visuals or descriptions.
+        **3. Market Trends and Insights**
+        - Trends observed in small business interior design.
+        - Emerging client needs or preferences.
+        **4. Challenges and Lessons Learned**
+        - Key obstacles encountered during the year.
+        - Lessons learned from specific projects or situations.
+        **5. Acknowledgments and Team Recognition**
+        - Recognition of individual and team contributions.
+        - Appreciation for clients, partners, and collaborators.
+    ...
+  ```
+
+  ```yaml
+  scenarios:
+    ...
+    - id: 4
+      context_factor: "AP Precalculus Students"
+      preference: "Completely thorough and simplified resources must be prepared for even the most basic topics."
+      task_type: "Information seeking"
+      story: ...
+      request_with_factor_and_preference: |
+        Give me a list of materials and activities that I can use to prepare for my maths lessons on precalculus. Specifically, I am teaching AP precalculus students that will require completely thorough and simplified materials for all topics in the curriculum, even the most basic topics.
+      request_with_factor: |
+        Give me a list of materials and activities that I can use to prepare for my maths lessons on precalculus. Specifically, I am teaching AP precalculus students.
+    ...
+  ```
+
+  ```yaml
+  scenarios:
+    ...
+    - id: 6
+      context_factor: "Resistance Bands Set"
+      preference: "Inspection protocols for equipment must be prominently featured in any related documentation."
+      task_type: "Content creating"
+      story: ...
+      request_with_factor_and_preference: |
+        I need to create a presentation for my soccer team that will show how to use the resistance bands set that we recently purchased. We are planning on using the bands for a variety of exercises, including strength/flexibility training, but also when simulating in-game movements like shooting, dribbling, and sprinting. It is important that the presentation includes prominent slides at the start that outline how to inspect the bands before each use to ensure they are safe and in good condition.
+      request_with_factor: |
+        I need to create a presentation for my soccer team that will show how to use the resistance bands set that we recently purchased. We are planning on using the bands for a variety of exercises, including strength/flexibility training but also when simulating in-game movements like shooting, dribbling, and sprinting.
+    ...
+  ```
+  
+  ```yaml
+  scenarios:
+    ...
+    - id: 2
+      context_factor: "Advisory Board Presentation"
+      preference: "Presentations should include examples that are universally understandable and inclusive."
+      task_type: "Brainstorming"
+      story: ...
+      request_with_factor_and_preference: |
+        Ideate on diverse possible sections and content to include in my upcoming advisory board presentation. This presentation will be about our company's new chatbot that is designed to assist customer to find and discover new seasonal clothing items in our online store, which focuses on vintage fashion. The presentation should include examples that are universally understandable and inclusive.
+      request_with_factor: |
+        Ideate on diverse possible sections and content to include in my upcoming advisory board presentation. This presentation will be about our company's new chatbot that is designed to assist customer to find and discover new seasonal clothing items in our online store, which focuses on vintage fashion.
+    ...
+  ```
+
+user_prompt: |-
+  ### User Persona
+  
+  {user_persona}
+
+  ### Context Factors
+
+  ```yaml
+  {context_factors}
+  ```

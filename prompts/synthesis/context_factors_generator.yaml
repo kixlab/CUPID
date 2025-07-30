@@ -1,0 +1,229 @@
+system_prompt: |-
+  ### **Your Objective:**  
+
+  You will be provided with a **user persona**. This user will interact with a conversational AI assistant (e.g., ChatGPT) in diverse **scenarios**. In each scenario, the user will ask the AI assistant to help them with a **task** in their worklife. Consider that diverse **factors** exist within the user's world and environment that influence their behavior and expectations in various contexts. This means that, if a context factor is involved in the interactions the user has with the AI assistant, the user will have certain expectations about the AI assistant based on their experiences and understanding of the context factor.
+
+  Your goal is to imagine the following by being creative and imagining comprehensive and rich details about the user's world:
+  1. Identify **context factors** that exist within the user's work life and environment.
+  2. Imagine the **contextual preferences** that the user will consider when interacting with the AI assistant when each factor is involved---based on the user's knowledge or experiences with the factor in their environment.
+
+  You should return your final output in valid YAML format.
+
+  ### **Definitions**:
+
+  **Scenario**:
+
+  Situation within a user's life that involves one or more factors within the user's world or environment that will influence how the user behaves and what they intent/expect in that scenario.
+
+  **Task**:
+
+  These are tasks, problems, assignments, or pieces of work that the user undergoes in the scenarios in their worklife. In particular, we are focused on the tasks where the user may need the help of a conversational AI assistant. Tasks should belong to one of the following types:
+  - Information seeking
+  - Learning
+  - Reasoning
+  - Planning
+  - Content creating
+  - Communicating
+  - Writing & editing
+  - Coding & debugging
+  - Problem solving
+  - Data analysing
+  - Advise seeking
+  - Brainstorming
+
+  **Context Factors**:  
+
+  These are specific and concrete elements within the user's world and environment that can be identified, described, and interacted with. These factors should be stable and significant, meaning that each factor will be present in various situations or scenarios in the user's work life. Consider diverse types of factors that the user interacts with in their work life. The factors should be realistic factors that exist in the actual real-world or fictional factors that are specific to the user's life. Factors should be one of the following types:
+  - Person/Group
+  - Organization/Institution
+  - Object/Artifact
+  - Content/Media
+  - Tool/Technology
+  - Location/Place
+  - Process/Activity
+  - Event/Time
+
+  **Contextual Preferences**:
+
+  These are guidelines, requirements, constraints, or principles that the AI assistant should align with in order to satisfy the user in given contexts (i.e., situations where a context factor is involved). These should be uniquely personal to the user and based on the user's personal life experiences with that context factor. You should imagine diverse types of preferences. You should create preferences that belong to one of the following types, which are organized into categories:
+  - Style Category
+    - Formality
+    - Clarity
+    - Conciseness
+    - Vividness
+    - Format
+    - Tone
+  - Content Category
+    - Relevance
+    - Depth
+    - Creativity
+    - Efficiency
+    - Practicality
+  - Harmless Category
+    - Accuracy
+    - Morality
+    - Safety
+    - Sensitivity
+    - Trustworthiness
+
+  ### **Output Requirements**:
+
+  For each context factor within the user's world:
+
+  1. **Select a Factor Type**: Select a type of factor that you will create.
+
+  2. **Imagine the Background**: Create a unique, rich, and personal backstory that illustrates a specific and concrete factor in the user's world or environment with the selected factor type. The narrative should describe how the user typically interacts with this factor and the tasks where this factor can be involved, even as a minor presence. This narrative should also present significant previous experiences that the user had with this factor and how this formed the user's expectations around the factor. Finally, you should describe how this influences the user's intentions in situations that involve the context factor.
+
+  3. **Name the Context Factor**: You should now provide the specific name of the factor. Avoid using generic placeholder names. Instead, imagine realistic and specific names for the factor.
+    - Example: Instead of "Excavation Site A", you can create a factor called "Excavation Site Near Cuscatlán".
+    - Example: Instead of "Prediction Model B", you can create a factor called "Seq2Seq Prediction Model".
+    - Example: Instead of "Video Sports Analysis Software", you can think of the factor "Hudl Software".
+    - Example: Instead of "Paper Template A", you can create a factor called "Paper Template for Nature Journal".
+
+  4. **Determine Task Types**: Based on the context factor and the background about the context factor, you should select possible tasks types from the given list. You should select types of tasks where the user needs the help of the AI assistant and where the context factor will be involved, even if it is a minor presence. You must select task types from the list. You can only select types from the list; avoid creating new types.
+
+  5. **Select a Preference Type**: Select the type of preference that you will create. You should not select the category but instead select from the given types within each category.
+
+  6. **Define the Contextual Preference**: Define the preference that encompasses the user's intentions and expectations for the AI assistant in the task types where the context factor is involved. This should not be commonsense knowledge or commonly held preferences, but instead the preference should tie to the user-specific experiences. Ensure that anyone can understand the contextual preference by itself, without other information like the task or context factor. The preference should be clear, interpretable, and usable for external human evaluators or AI evaluators.
+
+  You should create **{n_factors}** unique context factors, each with a backstory, a description, and a contextual preference.
+
+  **Create Contrastive Factors**: 
+  - The **last two (2)** context factors should be a **contrastive pair**. 
+  - A **contrastive pair** is two factors that are similar and have the same factor type. However, their contextual preferences must be incompatible, conflicting, or even contradictory to each other.
+  - Ensure that you satisfy the following requirements:
+    - **Distinct Factors**: The contrastive factors should be clearly distinct from each other. Avoid creating factor pairs that are the same factor but with different traits. For example, avoid pairs where the only difference is the time of day, the version of the factor, or a trait of the factor has changed. For example:
+      - Low Quality Pair: "Morning Advisor Meeting" and "Afternoon Advisor Meeting". High Quality Pair: "Advisor Meeting" and "Research Team Meeting".
+      - Low Quality Pair: "Excavation Report Version A" and "Excavation Report Version B". High Quality Pair: "Excavation Report" and "Archaeological Survey".
+      - Low Quality Pair: "Rushed Dr. Smith" and "Calm Dr. Smith". High Quality Pair: "Dr. Smith" and "Dr. Johnson".
+    - **Unique Preferences**: The  preferences of the contrastive factors should be unique to the user's personal experiences. Avoid creating generic, commonsense, or universal preferences. Ensure that the preferences cannot be easily inferred or deduced from the factor name.
+    - **Mutually Exclusive Preferences**: Ensure that the contextual preferences of the contrastive factors are mutually exclusive. They should not be able to coexist in the same context. There should be minimal to no overlap between the preferences of the contrastive factors.
+    - **related_factor Field**: You should write down the full name of the factor that it is contrasting with under the "related_factor" field. Avoid using shorthand or abbreviated names.
+
+
+  ### **Examples of Outputs**:
+
+  ```yaml
+  context_factors:
+    - factor_type: "Content/Media"
+      background: "..."
+      factor: "Progress Report"
+      task_types:
+        - Writing & editing
+        - Data analysing
+      preference_type: "Format"
+      preference: "The report should focus on quantitative statistics on projected growth, accompanied by subjective interpretations."
+      related_factor: "N/A"
+    - factor_type: "person"
+      background: "..."
+      factor: "Engineering Intern Rasmus"
+      task_types:
+        - Writing & editing
+        - Communicating
+        - Advise seeking
+      preference_type: "Tone"
+      preference: "Responsibilities should be communicated with a stern and direct tone."
+      related_factor: "N/A"
+    ...
+  ```
+
+  ```yaml
+  context_factors:
+    - factor_type: "Event/Time"
+      background: "..."
+      factor: "Monthly Team Research Presentations"
+      task_types:
+        - Content creating
+        - Brainstorming
+      preference_type: "Sensitivity"
+      preference: "A presentation should be built around an example, which should be universally understandable and inclusive."
+      related_factor: "N/A"
+    ...
+  ```
+
+  ```yaml
+  context_factors:
+    - factor_type: "Person/Group"
+      background: "..."
+      factor: "AP Precalculus Students"
+      task_types:
+        - Planning
+        - Information seeking
+        - Content creating
+      preference_type: "Clarity"
+      preference: "Completely thorough and simplified resources must be prepared for even the most basic topics."
+      related_factor: "N/A"
+    ...
+  ```
+
+  ```yaml
+  context_factors:
+    - factor_type: "Organization/Institution"
+      background: "..."
+      factor: "Non-profit - MADRE"
+      task_types:
+        - Writing & editing
+        - Communicating
+      preference_type: "Efficiency"
+      preference: "Communication should only deliver a few key points and clear action items."
+      related_factor: "Start-up - Squarespace"
+    - factor_type: "Organization/Institution"
+      background: "..."
+      factor: "Start-up - Squarespace"
+      task_types:
+        - Writing & editing
+        - Communicating
+      preference_type: "Efficiency"
+      preference: "Communication should comprehensively cover background context and encourage further discussion through questions."
+      related_factor: "Non-profit - MADRE"
+    ...
+  ```
+
+  ```yaml
+  context_factors:
+    - factor_type: "Tool/Technology"
+      background: "..."
+      factor: "JavaScript"
+      task_types:
+        - Coding & debugging
+        - Planning
+      preference_type: "Format"
+      preference: "Functions should have comments after the function definition that only explain how the function is used and where it is called."
+      related_factor: "Python"
+    - factor_type: "Tool/Technology"
+      background: "..."
+      factor: "Python"
+      task_types:
+        - Coding & debugging
+        - Planning
+      preference_type: "Format"
+      preference: "Functions should have comments before the function definition that only explain the function's expected inputs/outputs."
+      related_factor: "JavaScript"
+    ...
+  ```
+
+  ```yaml
+  context_factors:
+    - factor_type: "Object/Artifact"
+      factor: "Resistance Bands Set"
+      background: "..."
+      task_types:
+      - ...
+      preference_type: "Practicality"
+      preference: "Inspection protocols for equipment must be prominently featured in any related instructions or manuals."
+      related_factor: "Ankle Weights Set"
+    - factor_type: "Object/Artifact"
+      background: "..."
+      factor: "Ankle Weights Set"
+      task_types:
+      - ...
+      preference_type: "Practicality"
+      preference: "Related instructions or manuals should only demonstrate misuse scenarios and their consequences."
+      related_factor: "Resistance Bands Set"
+    ...
+  ```
+  
+user_prompt: |-
+  ### User Persona
+
+  {user_persona}

@@ -1,0 +1,51 @@
+system_prompt: |-
+  In this task, you will be presented with a **evaluation checklist** and a **preference**. The preference describes an aspect of AI outputs that should be evaluated. The checklist contain questions that are used to evaluate more specific or fine-grained aspects of the AI outputs.
+
+  Your task is to determine whether each entry in the checklist is **covered** by the preference. **Covered** means that the preference and the checklist entry will evaluate the same or similar aspects of an AI output, even if they use different wording or phrasing. A preference and checklist entry can refer to the subject matter differently (e.g., "response" vs "report") but still evaluate the same aspects. Ignore differences in wording and focus on the underlying aspects being evaluated.
+
+  For each checklist entry, you can choose one of the following options:
+
+  1. **Fully Covered**: The preference fully covers or evaluates the checklist entry. Evaluating on the preference will also evaluate the checklist entry.
+
+  2. **Partially Covered**: The preference partially covers or evaluates the checklist entry. Evaluating on the preference may evaluate some aspects of the checklist entry.
+
+  3. **Not Covered**: The preference does not cover or evaluate the checklist entry.
+
+  ### Output Format
+
+  Provide your results in the following JSON format. Ensure to include the code block markers (```).
+
+  ```json
+  {{
+    "results": [
+      {{
+        "index": <index of the entry in the checklist>,
+        "entry": <entry from the checklist>,
+        "reasoning": <explain your reasoning in detail regading whether the coverage of the entry in the preference>,
+        "label": <"Fully Covered" / "Partially Covered" / "Not Covered">
+      }},
+      {{
+        "index": <index of the entry in the checklist>,
+        "entry": <entry from the checklist>,
+        "reasoning": <explain your reasoning in detail regading whether the coverage of the entry in the preference>,
+        "label": <"Fully Covered" / "Partially Covered" / "Not Covered">
+      }},
+      ...
+    ]
+  }}
+  ```
+
+  ---
+
+  ### Examples
+
+  {examples}
+
+user_prompt: |-
+  #### Preference
+
+  {preference}
+
+  #### Checklist
+
+  {checklist}

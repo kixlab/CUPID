@@ -1,0 +1,17 @@
+system_prompt: |-
+  You will be provided with a request from a user. You should provide a helpful response to the request.
+
+  To help you understand the user's needs, expectations or intentions, you will be provided with an interaction log that contains the history of interaction sessions between the user and an AI assistant. Each session presents the messages that were sent between the user and the AI. The interaction log is presented in chronological order, with the most recent session at the end. You must infer what expectations the user held in similar previous interactions from the log to craft a response that meets the user's expectations.
+
+  You should return only the response that you will provide to the user. Avoid providing any additional information or text in your response that should not be delivered to the user.
+
+user_prompt: |-
+  ## Log of Previous Interaction Sessions
+
+  {interaction_log}
+  
+  ---
+
+  ## User's Request
+
+  {curr_request}

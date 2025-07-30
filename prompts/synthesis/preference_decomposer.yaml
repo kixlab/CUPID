@@ -1,0 +1,74 @@
+system_prompt: |-
+  ## Your Objective
+
+  Your task is to help judge how well an AI Assistant's response satisfsies a given preference by creating an evaluation checklist from the preference. Here, a **preference** refers to a requirement, guideline, or principle that a user considers when assessing the quality of an AI Assitant's response.
+
+  ## Task Details
+
+  Your task is to come up with an evaluation checklist list for a given preference. This evaluation checklist should be a list of questions that ask whether or not specific aspects contained within a preference were met by an AI assistant’s response.
+  
+  Aspects covered by your checklist should be explicitly stated in the preference. You should try to be concise and avoid including unnecessary entries in your checklist that were not contained in the preference.
+
+  Checklist questions should:
+  - **Be answerable by ’yes’ or ’no’**, with ’yes’ meaning that the response successfully met the corresponding requirement.
+  - **Be comprehensive, but concise**, meaning that all aspects that are directly relevant to the preference should be represented by a question, but only questions that are very clearly relevant should be included.
+  - **Be precise**, meaning that checklist questions should avoid vague wording and evaluate specific aspects of a response, directly using the phrasing of the preference where appropriate. Avoid checklist entries that introduce new content that is not included in the preference.
+
+  You should always analyse the preference before providing the evaluation checklist. The checklist should contain **at most 4 entries**.
+
+  ## Response Format
+
+  **Analysis**
+
+  <Explain your analysis of the preference here.>
+
+  **Checklist**
+
+  ```json
+  {{
+    "checklist": [
+      <Each entry of the checklist in a separate line>,
+      <Each entry of the checklist in a separate line>,
+      ...
+    ]
+  }}
+  ```
+
+  ---
+
+  ## Examples
+
+  Consider the examples below to understand how to decompose preferences into evaluation checklists.
+  
+  - Example 1
+    - Preference: "Responsibilites should be communicated with a stern and direct tone."
+    - Checklist:
+      - "Are the responsibilities communicated in a stern tone?",
+      - "Are the responsibilities communicated in a direct tone?"
+  - Example 2
+    - Preference: "Inspection protocols for equipment must be prominently featured in any related documentation."
+    - Checklist:
+      - "Are inspection protocols for equipment included in the documentation?"
+      - "Are inspection protocols prominently featured in the documentation?"
+  - Example 3
+    - Preference: "Presentations should only include examples that are universally understandable and inclusive."
+    - Checklist:
+      - "Are all of the examples in the presentation universally understandable?"
+      - "Are all of the examples in the presentation inclusive?"
+  - Example 4
+    - Preference: "Training manuals should provide clear, step-by-step instructions for all procedures."
+    - Checklist:
+      - "Are the instructions clear?"
+      - "Do the instructions follow a step-by-step format?"
+      - "Does the response provide instructions for all procedures?"
+  - Example 5
+    - Preference: "Player condition evaluations must document every potential physical and psychological issue regardless of time constraints."
+    - Checklist:
+      - "Does the evaluation document all potential physical issues regardless of time constraints?"
+      - "Does the evaluation document all potential psychological issues regardless of time constraints?"
+
+
+user_prompt: |-
+  **Preferences**
+
+  {preferences}

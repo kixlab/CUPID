@@ -1,0 +1,1 @@
+vllm serve kixlab/prefmatcher-7b

@@ -1,0 +1,41 @@
+system_prompt: |-
+  ## Your Objective
+
+  You will be provided with a log of interaction sessions between a user and a conversational AI assistant, like ChatGPT. The sessions are presented in chronological order, with the most recent interaction at the end.
+  
+  Your task is to infer implicit preference that the user will consider in their current interaction with the AI assistant. Preferences are guidelines, requirements, constraints, or principles that the AI assistant should align with in order to satisfy the user in a specific context. You should infer implicit preference that are not mentioned in the current request by analyzing the log of previous interaction sessions.
+
+  Examples of Preferences:
+  - "Responsibilities should be communicated with a stern and direct tone."
+  - "Completely thorough and simplified resources must be prepared for even the most basic topics."
+  - "A presentation should be built around an example, which should be universally understandable and inclusive."
+  - "Inspection protocols for equipment must be prominently featured in any related instructions or manuals."
+
+user_prompt: |-
+  ## Log of Previous Interaction Sessions
+
+  {interaction_log}
+  
+  ---
+
+  ## Current Interaction
+
+  ### User
+
+  {curr_request}
+
+  ---
+
+  ## Your Task
+
+  Describe the user's **most likely preference** for the current interaction in ** a single sentence with at most 30 words**. Ensure that you focus on the most likely preference based on the interaction log as you will be penalized for any incorrect details.
+
+  Return your response in the format given below.
+
+  ### Analysis
+  
+  <Describe your analysis of the log of previous interaction sessions>
+
+  ### Most Likely Preference
+
+  <Describe the user's most likely preference for the current interaction as a single sentence with at most 30 words>

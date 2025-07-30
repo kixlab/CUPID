@@ -1,0 +1,67 @@
+system_prompt: |-
+  Your task is to design user personas.
+
+  For each persona, you'll receive a basic persona description and the following attributes: 
+  - Occupation
+  - Career Level
+  - Personality Traits
+    - Openness to experience: (high) inventive/curious vs. (low) consistent/cautious
+    - Conscientiousness: (high) efficient/organized vs. (low) extravagant/careless
+    - Extraversion: (high) outgoing/energetic vs. (low) solitary/reserved
+    - Agreeableness: (high) friendly/compassionate vs. (low) critical/judgmental
+    - Neuroticism: (high) sensitive/nervous vs. (low) resilient/confident
+  - Personal Values
+    - Self-direction: independent thought and action
+    - Stimulation: excitement, novelty and challenge in life
+    - Hedonism: pleasure or sensuous gratification for oneself
+    - Achievement: personal success through demonstrating competence according to social standards
+    - Power: social status and prestige, control or dominance over people and resources
+    - Security: safety, harmony, and stability of society, of relationships, and of self
+    - Conformity: restraint of actions, inclinations, and impulses likely to upset or harm others and violate social expectations or norms
+    - Tradition: respect, commitment, and acceptance of the customs and ideas that one's culture or religion provides
+    - Benevolence: preserving and enhancing the welfare of those with whom one is in frequent personal contact (the 'in-group')
+    - Universalism: understanding, appreciation, tolerance, and protection for the welfare of all people and for nature
+  - Decision-Making Style
+    - Directive: focused on quick, clear, and decisive action, often relying on rules, logic, and existing frameworks to solve straightforward problems
+    - Analytical: emphasizes detailed analysis and comprehensive evaluation, often seeking data and considering multiple alternatives before making a decision
+    - Conceptual: looks at the bigger picture and long-term implications, encouraging creativity, innovative solutions, and diverse perspectives
+    - Behavioral: centers on people and relationships, valuing collaboration, open communication, and the well-being of those affected by the decision
+
+  Using these details, write a six-sentence expanded persona description following the content of each sentence:
+  1. Given Name (think of culturally diverse names), Age, Gender/Pronouns, Occupation, Career Level
+  2. Gain: Wants, needs, and measures of success.
+  3. Pain: Fears, frustrations, and obstacles.
+  4. Think and Feel: What really counts, their major preoccupations, worries, and aspirations.
+  5. Hear and See: How the persona views their environment, their friends, co-workers, etc. What others say about the persona.
+  6. Say and Do: How does the persona behave towards others, what do they do in their daily and work life.
+
+  Follow these guidelines:
+  - Ensure that your descriptions are balanced by exploring both the positives/strengths and negatives/weaknesses of the persona.
+  - Substitute the phrases which directly mention the personas' traits, such as due to her introverted nature", "his high neuroticism", or "her conceptual style", with other phrases that reveal the traits implicitly.
+  - You should show not tell, but keeping the tone clear and direct. Avoid emotional or subjective language and exaggeration.
+  - If any traits appear to conflict, address how these can coexist within the same individual and how they manifest in different contexts, reflecting the complexity of human behavior. For example, a person with a "Low Conscientiousness" personality may adopt a more "Directive" style at work to avoid making mistakes.
+  - Make sure that all the sentences are logically connected to each other and the basic persona description. Make the description natural and coherent, narrating the persona's behavior and backstory.
+  - Ensure that each sentence reveals new details and information, instead of repeating content similar to the other sentences.
+  - Think of broader, more abstract tasks that this persona might undertake throughout their life based on the basic persona description or seed. Consider mentioning various tasks that could span different domains that the persona might engage in, such as work, social life, or personal hobbies.
+
+  Please return your response in the following JSON format:
+  ```json
+  {{
+    "personas": [
+      {{
+        "description": "<6-sentence persona description illustrating their thoughts, behavior, actions, and backstory>",
+        "occupation": "<persona's occupation>"
+      }},
+      {{
+        "description": "<6-sentence persona description illustrating their thoughts, behavior, actions, and backstory>",
+        "occupation": "<persona's occupation>"
+      }},
+      ...
+    ]
+  }}
+  ```
+
+user_prompt: |-
+  ## List of Basic Personas
+
+  {seed_descriptions}
