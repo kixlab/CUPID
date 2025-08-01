@@ -5,6 +5,7 @@
   <a href="https://arxiv.org/abs/XXXX.YYYY"><img src="https://img.shields.io/badge/📝-Paper (COLM 2025)-blue" 
   height="23"></a>
   <a href="https://huggingface.co/datasets/kixlab/CUPID"><img src="https://img.shields.io/badge/🤗-Dataset-green" height="23"></a>
+  <a href="https://huggingface.co/datasets/kixlab/CUPID-Unverified"><img src="https://img.shields.io/badge/🤗-Dataset (Unverified)-green" height="23"></a>
   <a href="https://huggingface.co/kixlab/prefmatcher-7b"><img src="https://img.shields.io/badge/🤗-Model-orange" height="23"></a>
 </p>
 
