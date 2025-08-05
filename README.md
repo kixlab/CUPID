@@ -2,7 +2,7 @@
 
   <p align="center">  <a href="https://cupid.kixlab.org/"><img src="https://img.shields.io/badge/🌐-Website-red" 
   height="23"></a>
-  <a href="https://arxiv.org/abs/XXXX.YYYY"><img src="https://img.shields.io/badge/📝-Paper (COLM 2025)-blue" 
+  <a href="https://arxiv.org/abs/2508.01674"><img src="https://img.shields.io/badge/📝-Paper (COLM 2025)-blue" 
   height="23"></a>
   <a href="https://huggingface.co/datasets/kixlab/CUPID"><img src="https://img.shields.io/badge/🤗-Dataset-green" height="23"></a>
   <a href="https://huggingface.co/datasets/kixlab/CUPID-Unverified"><img src="https://img.shields.io/badge/🤗-Dataset (Unverified)-green" height="23"></a>
@@ -198,7 +198,7 @@ If you find our work useful, please consider citing our paper!
 @article{kim2025cupid,
   title     = {CUPID: Evaluating Personalized and Contextualized Alignment of LLMs from Interactions},
   author    = {Kim, Tae Soo and Lee, Yoonjoo and Park, Yoonah and Kim, Jiho and Kim, Young-Ho and Kim, Juho},
-  journal   = {arXiv preprint arXiv:XXXX.YYYYY},
+  journal   = {arXiv preprint arXiv:2508.01674},
   year      = {2025},
 }
 ```
