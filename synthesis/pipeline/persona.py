@@ -53,6 +53,11 @@ def generate_personas(model_name: str, n_personas: int, output_dir: str) -> list
     # Generate full personas from templates using the specified model
     logger.info("Generating Personas...")
     new_personas = persona_generator(persona_templates)
+    # Update IDs of the new personas
+    max_prev_id = max([p.get('id') for p in personas])
+    for p in new_personas:
+        p['id'] = max_prev_id + 1
+        max_prev_id += 1
     personas += new_personas
     
     # Log the generated personas for debugging (at debug level to avoid spam)

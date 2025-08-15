@@ -21,7 +21,9 @@ def setup_main_logging(log_file_path):
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
     root_logger.handlers.clear()
-    # Only add a handler for errors in the main process itself (optional)
+    # Add a queue handler to the main process so its logs go through the queue
+    queue_handler = logging.handlers.QueueHandler(log_queue)
+    root_logger.addHandler(queue_handler)
     return log_queue, listener
 
 def setup_worker_logging(log_queue):

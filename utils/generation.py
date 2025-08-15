@@ -5,8 +5,8 @@ from importlib import resources
 
 import openai
 from anthropic import AnthropicBedrock, Anthropic
-from google import genai
-from google.genai import types
+# from google import genai
+# from google.genai import types
 from config import VLLM_HOST
 import logging
 
@@ -50,14 +50,14 @@ if os.environ.get("TOGETHER_API_KEY") is not None:
 else:
     logger.warning("TOGETHER_API_KEY is not set")
 
-if os.environ.get("GEMINI_PROJECT_ID") is not None:
-    gemini_client = genai.Client(
-        vertexai=True, 
-        project=os.environ.get("GEMINI_PROJECT_ID"),
-        location="us-central1"
-    )
-else:
-    logger.warning("GEMINI_PROJECT_ID is not set")
+# if os.environ.get("GEMINI_PROJECT_ID") is not None:
+#     gemini_client = genai.Client(
+#         vertexai=True, 
+#         project=os.environ.get("GEMINI_PROJECT_ID"),
+#         location="us-central1"
+#     )
+# else:
+#     logger.warning("GEMINI_PROJECT_ID is not set")
 
 vllm_client = openai.Client(
     api_key="EMPTY",
@@ -104,6 +104,26 @@ MODEL_DICTIONARY = {
         "kixlab/prefmatcher-7b"
     ]
 }
+
+def anthropic_track_usage(model_name, system, messages, output_text):
+    anthropic_usage_file = "anthropic_usage.jsonl"
+    input_tokens = anthropic_client.messages.count_tokens(
+        model= "claude-3-5-sonnet-20241022",
+        system=system,
+        messages=messages
+    ).input_tokens
+    output_tokens = anthropic_client.messages.count_tokens(
+        model= "claude-3-5-sonnet-20241022",
+        messages=[{
+            "role": "assistant",
+            "content": output_text
+        }]
+    ).input_tokens
+    with open(anthropic_usage_file, "a") as f:
+        f.write(json.dumps({
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens
+        }) + "\n")
 
 def generate_openai(model_name, messages, temperature, max_tokens):
     if openai_client is None:
@@ -264,25 +284,27 @@ def generate_anthropic_bedrock(model_name, system, messages, temperature, max_to
 
         thinking_text = thinking_text.strip()
         output_text = output_text.strip()
+        anthropic_track_usage(model_name, system, messages, thinking_text + " " + output_text)
         return output_text
     else:
+        anthropic_track_usage(model_name, system, messages, output.content[0].text)
         return output.content[0].text
 
 
-def generate_gemini(model_name, system, messages, temperature, max_tokens):
-    if gemini_client is None:
-        raise Exception("GEMINI_PROJECT_ID is not set")
+# def generate_gemini(model_name, system, messages, temperature, max_tokens):
+#     if gemini_client is None:
+#         raise Exception("GEMINI_PROJECT_ID is not set")
 
-    response = gemini_client.models.generate_content(
-        model=model_name,
-        config=types.GenerateContentConfig(
-            system_instruction=system,
-            max_output_tokens=max_tokens,
-            temperature=temperature,
-        ),
-        contents=messages
-    )
-    return response.text
+#     response = gemini_client.models.generate_content(
+#         model=model_name,
+#         config=types.GenerateContentConfig(
+#             system_instruction=system,
+#             max_output_tokens=max_tokens,
+#             temperature=temperature,
+#         ),
+#         contents=messages
+#     )
+#     return response.text
 
 def generate_vllm(model_name, messages, temperature, max_tokens):
     output = vllm_client.chat.completions.create(
@@ -314,9 +336,9 @@ def generate(model_name, system, prompt, temperature=0.0, max_tokens=1024, verbo
         messages = [{ "role": "user", "content": prompt }]
         output = generate_anthropic_bedrock(model_name, system, messages, temperature, max_tokens)
     
-    elif model_name in MODEL_DICTIONARY['gemini']:
-        messages = [prompt]
-        output = generate_gemini(model_name, system, messages, temperature, max_tokens)
+    # elif model_name in MODEL_DICTIONARY['gemini']:
+    #     messages = [prompt]
+    #     output = generate_gemini(model_name, system, messages, temperature, max_tokens)
     
     elif model_name in MODEL_DICTIONARY['vllm']:
         messages = [{ "role": "user", "content": prompt }]

@@ -119,15 +119,15 @@ def create_instances(output_dir: str) -> None:
             # 2) Contrastive instance: includes contrastive interactions
             # - Excludes changing and random sessions (for equal number of sessions across instances)
             instance['instance_type'] = "contrastive"
-            instance['interactions'] = format_prior_interaction(sessions, interactions, random_session_ids + changing_session_ids)
+            instance['prior_interactions'] = format_prior_interaction(sessions, interactions, random_session_ids + changing_session_ids)
             save_json(os.path.join(instances_dir, f"{data_name}+contrastive.json"), instance, indent=2)
 
             # 3) Changing instance: includes the changing sessions with the new preference for main factor
             # - Excludes contrastive and random sessions (for equal number of sessions across instances)
             instance['instance_type'] = "changing"
-            instance['preference'] = sessions[-1]['preference']
-            instance['checklist'] = sessions[-1]['checklist']
-            instance['interactions'] = format_prior_interaction(sessions, interactions, random_session_ids + contrastive_session_ids)
+            instance['current_contextual_preference'] = sessions[-1]['preference']
+            instance['current_checklist'] = sessions[-1]['checklist']
+            instance['prior_interactions'] = format_prior_interaction(sessions, interactions, random_session_ids + contrastive_session_ids)
             save_json(os.path.join(instances_dir, f"{data_name}+changing.json"), instance, indent=2)
             
         except Exception as e:
