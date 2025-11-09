@@ -5,7 +5,8 @@
   <a href="https://arxiv.org/abs/2508.01674"><img src="https://img.shields.io/badge/📝-Paper (COLM 2025)-blue" 
   height="23"></a>
   <a href="https://huggingface.co/datasets/kixlab/CUPID"><img src="https://img.shields.io/badge/🤗-Dataset-green" height="23"></a>
-  <a href="https://huggingface.co/datasets/kixlab/CUPID"><img src="https://img.shields.io/badge/🤗-Dataset (Unverified)-green" height="23"></a>
+  <a href="https://huggingface.co/datasets/kixlab/CUPID-Raw"><img src="https://img.shields.io/badge/🤗-Raw Data-green" height="23"></a>
+  <a href="https://huggingface.co/datasets/kixlab/CUPID-Unverified"><img src="https://img.shields.io/badge/🤗-Dataset (Unverified)-green" height="23"></a>
   <a href="https://huggingface.co/kixlab/prefmatcher-7b"><img src="https://img.shields.io/badge/🤗-Model-orange" height="23"></a>
 </p>
 
@@ -74,6 +75,8 @@ The CUPID dataset is available on HuggingFace: [kixlab/CUPID](https://huggingfac
 - `current_contextual_preference`: Ground-truth preference for this context
 - `current_checklist`: Specific criteria for evaluating response alignment
 - `prior_interactions`: List of previous interaction sessions showing user feedback
+
+Check [kixlab/CUPID-Raw](https://huggingface.co/datasets/kixlab/CUPID-Raw) for the full personas, context factors, and interaction sessions used to synthesize the benchmark.
 
 We also release [kixlab/CUPID-Unverified](https://huggingface.co/datasets/kixlab/CUPID-Unverified), a non-validated version of CUPID with >3k instances.
 
