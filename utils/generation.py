@@ -5,8 +5,8 @@ from importlib import resources
 
 import openai
 from anthropic import AnthropicBedrock, Anthropic
-# from google import genai
-# from google.genai import types
+from google import genai
+from google.genai import types
 from config import VLLM_HOST
 import logging
 
@@ -50,14 +50,14 @@ if os.environ.get("TOGETHER_API_KEY") is not None:
 else:
     logger.warning("TOGETHER_API_KEY is not set")
 
-# if os.environ.get("GEMINI_PROJECT_ID") is not None:
-#     gemini_client = genai.Client(
-#         vertexai=True, 
-#         project=os.environ.get("GEMINI_PROJECT_ID"),
-#         location="us-central1"
-#     )
-# else:
-#     logger.warning("GEMINI_PROJECT_ID is not set")
+if os.environ.get("GEMINI_PROJECT_ID") is not None:
+    gemini_client = genai.Client(
+        vertexai=True, 
+        project=os.environ.get("GEMINI_PROJECT_ID"),
+        location="us-central1"
+    )
+else:
+    logger.warning("GEMINI_PROJECT_ID is not set")
 
 vllm_client = openai.Client(
     api_key="EMPTY",
@@ -291,20 +291,20 @@ def generate_anthropic_bedrock(model_name, system, messages, temperature, max_to
         return output.content[0].text
 
 
-# def generate_gemini(model_name, system, messages, temperature, max_tokens):
-#     if gemini_client is None:
-#         raise Exception("GEMINI_PROJECT_ID is not set")
+def generate_gemini(model_name, system, messages, temperature, max_tokens):
+    if gemini_client is None:
+        raise Exception("GEMINI_PROJECT_ID is not set")
 
-#     response = gemini_client.models.generate_content(
-#         model=model_name,
-#         config=types.GenerateContentConfig(
-#             system_instruction=system,
-#             max_output_tokens=max_tokens,
-#             temperature=temperature,
-#         ),
-#         contents=messages
-#     )
-#     return response.text
+    response = gemini_client.models.generate_content(
+        model=model_name,
+        config=types.GenerateContentConfig(
+            system_instruction=system,
+            max_output_tokens=max_tokens,
+            temperature=temperature,
+        ),
+        contents=messages
+    )
+    return response.text
 
 def generate_vllm(model_name, messages, temperature, max_tokens):
     output = vllm_client.chat.completions.create(
@@ -336,9 +336,9 @@ def generate(model_name, system, prompt, temperature=0.0, max_tokens=1024, verbo
         messages = [{ "role": "user", "content": prompt }]
         output = generate_anthropic_bedrock(model_name, system, messages, temperature, max_tokens)
     
-    # elif model_name in MODEL_DICTIONARY['gemini']:
-    #     messages = [prompt]
-    #     output = generate_gemini(model_name, system, messages, temperature, max_tokens)
+    elif model_name in MODEL_DICTIONARY['gemini']:
+        messages = [prompt]
+        output = generate_gemini(model_name, system, messages, temperature, max_tokens)
     
     elif model_name in MODEL_DICTIONARY['vllm']:
         messages = [{ "role": "user", "content": prompt }]
